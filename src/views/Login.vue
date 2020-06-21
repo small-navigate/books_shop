@@ -1,38 +1,42 @@
 <template>
-  <div class="login">
-    <div class="login_box">
-      <!-- login 开始 -->
-      <div class="avatar_box">
-        <img src="../assets/login.png" alt />
+  <backgroud>
+    <div class="login">
+      <div class="login_box">
+        <!-- login 开始 -->
+        <div class="avatar_box">
+          <img src="../assets/login.png" alt />
+        </div>
+        <!-- login 结束 -->
+        <!--  登录表单 开始 -->
+        <el-form
+          label-width="0px"
+          :rules="loginRules"
+          class="login_form"
+          :model="loginFrom"
+          ref="loginFormRef"
+        >
+          <el-form-item prop="username">
+            <el-input prefix-icon="el-icon-user" v-model="loginFrom.username" placeholder="请输入您的账号"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input prefix-icon="el-icon-lock" v-model="loginFrom.password" placeholder="请输入您的密码"></el-input>
+          </el-form-item>
+          <!--  按钮 -->
+          <el-form-item class="login_btn">
+            <el-button type="primary" @click="login">登录</el-button>
+            <el-button type="info" @click="resetLoginForm">重置</el-button>
+            <el-button type="info" @click="toRegister">没有账号</el-button>
+          </el-form-item>
+        </el-form>
+        <!-- 登录表单 结束 -->
       </div>
-      <!-- login 结束 -->
-      <!--  登录表单 开始 -->
-      <el-form
-        label-width="0px"
-        :rules="loginRules"
-        class="login_form"
-        :model="loginFrom"
-        ref="loginFormRef"
-      >
-        <el-form-item prop="username">
-          <el-input prefix-icon="el-icon-user" v-model="loginFrom.username" placeholder="请输入您的账号"></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input prefix-icon="el-icon-lock" v-model="loginFrom.password" placeholder="请输入您的密码"></el-input>
-        </el-form-item>
-        <!--  按钮 -->
-        <el-form-item class="login_btn">
-          <el-button type="primary" @click="login">登录</el-button>
-          <el-button type="info" @click="resetLoginForm">重置</el-button>
-          <el-button type="info" @click="toRegister">没有账号</el-button>
-        </el-form-item>
-      </el-form>
-      <!-- 登录表单 结束 -->
     </div>
-  </div>
+  </backgroud>
 </template>
 <script>
+import backgroud from '../components/Backgroud'
 export default {
+  components: { backgroud },
   data() {
     return {
       loginFrom: {
@@ -94,9 +98,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.bg {
+  height: 100%;
+}
 .login {
   height: 100%;
-  background-color: #9c88ff;
   display: flex;
   justify-content: center;
   align-items: center;

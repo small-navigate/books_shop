@@ -5,6 +5,7 @@
 </template>
 <script>
 export default {}
+import './assets/css/global.css'
 </script>
 <style>
 </style>

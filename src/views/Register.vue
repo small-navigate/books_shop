@@ -1,45 +1,57 @@
 <template>
-  <div class="register">
-    <div class="register_box">
-      <!-- register 开始 -->
-      <div class="avatar_box">
-        <img src="../assets/login.png" alt />
+  <background>
+    <div class="register">
+      <div class="register_box">
+        <!-- register 开始 -->
+        <div class="avatar_box">
+          <img src="../assets/login.png" alt />
+        </div>
+        <!-- register 结束 -->
+        <!--  登录表单 开始 -->
+        <el-form
+          label-width="0px"
+          :rules="registerRules"
+          class="register_form"
+          :model="registerFrom"
+          ref="registerFormRef"
+        >
+          <el-form-item prop="username">
+            <el-input
+              prefix-icon="el-icon-user"
+              v-model="registerFrom.username"
+              placeholder="请输入您的账号"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              prefix-icon="el-icon-lock"
+              v-model="registerFrom.password"
+              placeholder="请输入您的密码"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="checkPass">
+            <el-input
+              prefix-icon="el-icon-lock"
+              v-model="registerFrom.checkPass"
+              placeholder="请再次输入密码"
+            ></el-input>
+          </el-form-item>
+          <!--  按钮 -->
+          <el-form-item class="register_btn">
+            <el-button type="primary" @click="register">注册</el-button>
+            <el-button type="info" @click="resetregisterForm">重置</el-button>
+            <el-button type="info" @click="toRegister">已有账号</el-button>
+          </el-form-item>
+        </el-form>
+        <!-- 登录表单 结束 -->
       </div>
-      <!-- register 结束 -->
-      <!--  登录表单 开始 -->
-      <el-form
-        label-width="0px"
-        :rules="registerRules"
-        class="register_form"
-        :model="registerFrom"
-        ref="registerFormRef"
-      >
-        <el-form-item prop="username">
-          <el-input
-            prefix-icon="el-icon-user"
-            v-model="registerFrom.username"
-            placeholder="请输入您的账号"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input prefix-icon="el-icon-lock" v-model="registerFrom.password"></el-input>
-        </el-form-item>
-        <el-form-item prop="checkPass">
-          <el-input prefix-icon="el-icon-lock" v-model="registerFrom.checkPass"></el-input>
-        </el-form-item>
-        <!--  按钮 -->
-        <el-form-item class="register_btn">
-          <el-button type="primary" @click="register">注册</el-button>
-          <el-button type="info" @click="resetregisterForm">重置</el-button>
-          <el-button type="info" @click="toRegister">已有账号</el-button>
-        </el-form-item>
-      </el-form>
-      <!-- 登录表单 结束 -->
     </div>
-  </div>
+  </background>
 </template>
 <script>
+import background from '../components/Backgroud'
 export default {
+  components: { background },
   data() {
     return {
       registerFrom: {
@@ -121,16 +133,18 @@ export default {
           message: res.meta.msg,
           type: 'success'
         })
-        this.$router.push('/login')
+        this.toRegister()
       })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+.bg {
+  height: 100%;
+}
 .register {
   height: 100%;
-  background-color: #9c88ff;
   display: flex;
   justify-content: center;
   align-items: center;
