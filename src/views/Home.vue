@@ -99,7 +99,7 @@
                   <img :src="item.bookimg" />
                 </div>
                 <div class="books_text">
-                  <a href="#">{{item.bookname}}</a>
+                  <a href="javascript:;">{{item.bookname}}</a>
                 </div>
               </div>
             </div>
@@ -109,19 +109,27 @@
         <!-- 猜你喜欢 -->
         <div class="el_conter">
           <div class="conter_title">
-            <div class="conter_text">猜你喜欢,分类详情</div>
+            <div class="conter_text">猜你喜欢</div>
           </div>
           <div class="conter_main">
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
+            <div class="img" v-for="item in likeList" :key="item.id">
+              <div class="main_images">
+                <div class="main_img">
+                  <img :src="item.bookimg" />
+                </div>
+                <div class="main_bookname">
+                  <span>{{item.bookname}}</span>
+                </div>
+                <div class="main_price">
+                  <div class="newPrice">
+                    <span>￥{{item.newPrice}}</span>
+                  </div>
+                  <div class="oldPrice">
+                    <span>￥{{item.oldPrice}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="conter_toTag">
             <span @click="toTag">更多分类...</span>
@@ -129,22 +137,33 @@
         </div>
         <el-divider></el-divider>
         <!-- 分类推荐 -->
-        <div class="el_conter">
+        <div class="el_conter" v-for="item in CataoryList" :key="item.id">
           <div class="conter_title">
-            <div class="conter_text">猜你喜欢</div>
+            <div class="conter_text">
+              <span>{{item.cataory}}</span>
+            </div>
           </div>
           <div class="conter_main">
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
-            <div class="img">1</div>
+            <div class="img" v-for="item2 in item.list" :key="item2.id">
+              <div class="main_images">
+                <div class="main_img">
+                  <img :src="item2.bookimg" />
+                </div>
+                <div class="main_bookname">
+                  <span>{{item2.bookname}}</span>
+                </div>
+                <div class="main_price">
+                  <div class="newPrice">
+                    <span>￥{{item2.newPrice}}</span>
+                  </div>
+                  <div class="oldPrice">
+                    <span>￥{{item2.oldPrice}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <el-divider></el-divider>
         </div>
       </div>
       <!-- 内容区域结束 -->
@@ -205,12 +224,15 @@ export default {
       isShow: false,
       isListShow: false,
       cataoryListArr: [],
-      isTimer: ''
+      isTimer: '',
+      likeList: [],
+      CataoryList: [],
+      conterCataoryList: []
     }
   },
   mounted() {
-    console.log(this.isShow)
     this.getSwiper()
+    this.getContent()
   },
   methods: {
     // 点击登录
@@ -234,7 +256,16 @@ export default {
       const { data: res } = await this.$http.get('/home/swiper')
       this.getSwiperList = res.message
       this.cataoryListArr = this.getSwiperList.cataory[0]
-      console.log(this.getSwiperList)
+    },
+    // 获取content数据
+    async getContent() {
+      const { data: res } = await this.$http.get('/home/content')
+      this.likeList = res.message.homeLikeList
+      this.CataoryList = res.message.homeCataoryList
+      console.log(this.likeList, this.CataoryList)
+
+      this.conterCataoryList
+      this.getSwiperList.cataory.forEach(v => {})
     },
     // 鼠标移入移出事件
     mouseOver(index) {
@@ -265,338 +296,5 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.el-container {
-  height: 100%;
-  width: 100%;
-
-  .el-header {
-    width: 100%;
-    background-color: #f5f5f5;
-    .home_header {
-      width: 1200px;
-      margin: 0 auto;
-      height: 60px;
-      background-color: #f5f5f5;
-      .el-row {
-        margin: 0 30px;
-        .home_left {
-          display: flex;
-          .left_login {
-            color: #f22e00;
-          }
-          div {
-            width: 100px;
-            height: 60px;
-            line-height: 60px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-          }
-          div:hover {
-            background-color: #fff;
-          }
-        }
-        .home_right {
-          display: flex;
-          flex-direction: row-reverse;
-          .right_cart {
-            display: flex;
-            .imgs {
-              box-sizing: border-box;
-              width: 22px;
-              height: 22px;
-              margin-top: 4px;
-              margin-left: 10px;
-              img {
-                width: 100%;
-                height: 100%;
-              }
-            }
-            .text {
-              box-sizing: border-box;
-              width: 78px;
-              text-align: left;
-              padding-left: 4px;
-            }
-          }
-          div {
-            width: 100px;
-            height: 60px;
-            line-height: 60px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-          }
-          div:hover {
-            background-color: #fff;
-          }
-        }
-      }
-    }
-  }
-  .el_main {
-    width: 1200px;
-    margin: 0 auto;
-    background-color: #fff;
-    .search {
-      width: 100%;
-      height: 150px;
-      background-color: #fff;
-      .search_logo {
-        height: 150px;
-        .login {
-          margin: 0 auto;
-          width: 120px;
-          height: 120px;
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-      .search_input {
-        height: 150px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .input {
-          width: 500px;
-          height: 50px;
-          position: absolute;
-          input {
-            position: relative;
-            display: inline-block;
-            font-size: 18px;
-            box-sizing: border-box;
-          }
-          input[type='text'] {
-            background-color: #fff;
-            position: relative;
-            top: -1px;
-            width: 400px;
-            height: 50px;
-            outline: none;
-            padding: 0 25px;
-            border-radius: 25px 0 0 25px;
-            border: 2px solid #d81e06;
-          }
-          input[type='submit'] {
-            position: relative;
-            border-radius: 0 25px 25px 0;
-            width: 100px;
-            height: 50px;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            background-color: #d81e06;
-            color: #fff;
-          }
-        }
-      }
-      .search_code {
-        height: 150px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .code {
-          width: 80px;
-          height: 80px;
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-    }
-    .swiper {
-      margin-bottom: 20px;
-      position: relative;
-      .box {
-        width: 920px;
-        height: 320px;
-        background-color: #fff;
-        position: absolute;
-        top: 20px;
-        left: 280px;
-        z-index: 10;
-        display: flex;
-        flex-wrap: wrap;
-        div {
-          box-sizing: border-box;
-        }
-        .books_box {
-          width: 25%;
-          height: 160px;
-          .books_box_center {
-            width: 230px;
-            height: 160px;
-            padding: 10px 65px;
-            .books_img {
-              width: 80px;
-              height: calc(148 * 80 / 100px);
-              img {
-                width: 100%;
-                height: 100%;
-              }
-            }
-            .books_text {
-              width: 80px;
-              height: calc(160- 148 * 80 / 100px);
-              text-align: center;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              a {
-                color: #7575a1;
-                font-size: 12px;
-                font-weight: 400;
-                line-height: calc(160- 148 * 80 / 100) px;
-                text-decoration: none;
-              }
-            }
-          }
-        }
-      }
-      .el-row {
-        height: 380px;
-        .navList {
-          background-image: linear-gradient(
-            to top right,
-            rgba(224, 73, 13, 0.4),
-            rgba(4, 149, 245, 0.5)
-          );
-          margin: 20px;
-          padding: 0;
-          list-style: none;
-          font-size: 18px;
-          font-weight: 600;
-          li {
-            height: 40px;
-            line-height: 40px;
-
-            .span_text {
-              display: inline-block;
-              text-align: center;
-              width: 220px;
-            }
-            .span_ {
-              display: inline-block;
-              width: 40px;
-            }
-          }
-          li:hover {
-            background-color: #d81e06;
-          }
-        }
-        .el-carousel {
-          margin-top: 20px;
-          .carousel_img {
-            cursor: pointer;
-          }
-        }
-      }
-    }
-    .el_conter {
-      width: 100%;
-      .conter_title {
-        width: 100%;
-        height: 40px;
-        background-image: linear-gradient(
-          to top right,
-          rgba(224, 73, 13, 0.4),
-          rgba(4, 149, 245, 0.5)
-        );
-        .conter_text {
-          width: 90%;
-          height: 40px;
-          margin: 0 auto;
-          font-size: 20px;
-          line-height: 40px;
-          font-weight: 600;
-          color: #d81e06;
-        }
-      }
-      .conter_main {
-        width: 100%;
-
-        display: flex;
-        flex-wrap: wrap;
-        div {
-          box-sizing: border-box;
-        }
-        .img {
-          width: 20%;
-          height: 200px;
-          border: 1px solid red;
-        }
-      }
-      .conter_toTag {
-        width: 100%;
-        height: 30px;
-        text-align: right;
-        span {
-          padding: 30px;
-          line-height: 30px;
-          font-size: 16px;
-          color: #6c968d;
-          cursor: pointer;
-          font-weight: 600;
-        }
-      }
-    }
-  }
-  .el_footer {
-    background-color: #f5f5f5;
-    height: 150px;
-    width: 100%;
-    box-sizing: border-box;
-    .footer_conter {
-      height: 120px;
-      padding-top: 30px;
-      width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      background-color: #f5f5f5;
-
-      .footer_sort {
-        flex: 1;
-        text-align: center;
-        .hr {
-          width: 100%;
-          height: 1px;
-          border: 1px solid #fff;
-        }
-        .f_title {
-          font-size: 16px;
-          font-weight: 600;
-        }
-        ul {
-          margin: 0;
-          padding: 10px 0 0 0;
-          li {
-            height: 20px;
-            list-style: none;
-            line-height: 20px;
-            font-size: 14px;
-            color: #ccc;
-          }
-        }
-      }
-    }
-  }
-}
-.content-area {
-  height: calc(100vh - 100px);
-  overflow: auto;
-}
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 18px;
-  opacity: 0.75;
-  line-height: 300px;
-  margin: 0;
-}
+<style lang="scss" src="../assets/css/home.scss" scoped>
 </style>
