@@ -39,6 +39,7 @@
           </el-row>
         </div>
       </el-header>
+
       <!-- 头部结束 -->
 
       <!-- 内容区域开始 -->
@@ -66,6 +67,7 @@
           </el-row>
         </div>
         <el-divider></el-divider>
+        <!-- 轮播开始 -->
         <div class="swiper">
           <el-row>
             <el-col :span="6">
@@ -86,7 +88,12 @@
               <el-carousel :interval="5000" arrow="always" height="340px" indicator-position="none">
                 <el-carousel-item v-for="item in getSwiperList.swiperURL" :key="item.id">
                   <div class="carousel_img">
-                    <el-image :src="item.swiper" fit="contain" style="width: 900px; height: 320px"></el-image>
+                    <el-image
+                      :src="item.swiper"
+                      fit="contain"
+                      style="width: 900px; height: 320px"
+                      @click="toClass(item.id)"
+                    ></el-image>
                   </div>
                 </el-carousel-item>
               </el-carousel>
@@ -96,7 +103,7 @@
             <div class="books_box" v-for="item in cataoryListArr.cataoryList" :key="item.id">
               <div class="books_box_center">
                 <div class="books_img">
-                  <img :src="item.bookimg" />
+                  <img v-lazy="item.bookimg" />
                 </div>
                 <div class="books_text">
                   <a href="javascript:;">{{item.bookname}}</a>
@@ -115,7 +122,7 @@
             <div class="img" v-for="item in likeList" :key="item.id">
               <div class="main_images">
                 <div class="main_img">
-                  <img :src="item.bookimg" />
+                  <img v-lazy="item.bookimg" />
                 </div>
                 <div class="main_bookname">
                   <span>{{item.bookname}}</span>
@@ -249,7 +256,17 @@ export default {
       this.$router.push('./center')
     },
     toTag() {
-      this.$router.push('./tag')
+      // 跳转详细分类页面
+      this.$router.push('./Details')
+    },
+    toClass(id) {
+      // 跳转分类页面
+      this.$router.push({
+        path: './classification',
+        query: {
+          classId: id
+        }
+      })
     },
     // 获取swiper数据
     async getSwiper() {

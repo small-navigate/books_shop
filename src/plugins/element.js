@@ -14,7 +14,7 @@ import {
   Backtop,
   Carousel,
   CarouselItem,
-  Image
+  Image,
 } from 'element-ui'
 
 Vue.use(Container)
