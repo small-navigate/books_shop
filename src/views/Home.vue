@@ -147,7 +147,7 @@
         <div class="el_conter" v-for="item in CataoryList" :key="item.id">
           <div class="conter_title">
             <div class="conter_text">
-              <span>{{item.cataory}}</span>
+              <span @click="toClass(item.id)">{{item.cataory}}</span>
             </div>
           </div>
           <div class="conter_main">

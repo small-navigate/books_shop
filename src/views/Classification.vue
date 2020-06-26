@@ -2,29 +2,35 @@
   <background>
     <headerHome></headerHome>
     <search>
-      <div class="class_main">
-        <div class="el_conter">
-          <div class="conter_main">
-            <div class="img">
-              <div class="main_images">
-                <div class="main_img">
-                  <img src="https://img3.doubanio.com/lpic/s29961252.jpg" />
-                </div>
-                <div class="main_bookname">
-                  <span>哈哈</span>
-                </div>
-                <div class="main_price">
-                  <div class="newPrice">
-                    <span>￥100</span>
-                  </div>
-                  <div class="oldPrice">
-                    <span>￥1000</span>
-                  </div>
-                </div>
+      <div class="nav">
+        <div class="content">
+          <div class="nav_item" v-for="item in cataory" :key="item.id">
+            <span @click="toClassification(item.id)">{{item.cataory}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="conter_main">
+        <div class="img" v-for="item in booklist" :key="item.id">
+          <div class="main_images">
+            <div class="main_img">
+              <img v-lazy="item.bookimg" />
+            </div>
+            <div class="main_bookname">
+              <span>{{item.bookname}}</span>
+            </div>
+            <div class="main_price">
+              <div class="newPrice">
+                <span>￥{{item.newPrice}}</span>
+              </div>
+              <div class="oldPrice">
+                <span>￥{{item.newPrice}}</span>
               </div>
             </div>
           </div>
-          <el-divider></el-divider>
+        </div>
+        <div class="conter_text" v-show="isShow">
+          <span>正在加载请稍后。。。</span>
         </div>
       </div>
     </search>
@@ -42,115 +48,186 @@ export default {
   },
   data() {
     return {
-      count: 0
+      booklist: [],
+      routerQuery: '',
+      count: 0,
+      cataory: [],
+      scroll: '',
+      body: '',
+      isShow: false
     }
   },
   mounted() {
-    console.log(this.$route.query)
+    this.routerQuery = this.$route.query.classId
+    for (let i = 0; i < 5; i++) {
+      this.getList()
+      console.log(this.count)
+    }
+
+    this.getCataoryList()
+    window.addEventListener('scroll', this.menu)
   },
-  methods: {}
+  methods: {
+    // 跳转页面
+    toClassification(id) {
+      // 跳转分类页面
+      this.$router.push({
+        path: './classification',
+        query: {
+          classId: id
+        }
+      })
+      this.routerQuery = this.$route.query.classId
+      this.count = 0
+      this.booklist = []
+      for (let i = 0; i < 5; i++) {
+        this.getList()
+      }
+    },
+    async getList() {
+      this.isShow = true
+      this.count++
+      const { data: res } = await this.$http.get(
+        `/classification/${this.routerQuery}/${this.count}`
+      )
+      if ((res.meta, status == 201)) {
+      } else {
+        this.booklist = [...this.booklist, ...res.message.data]
+        console.log(this.booklist)
+        this.isShow = false
+      }
+    },
+    async getCataoryList() {
+      const { data: res } = await this.$http.get('/classification/cataory')
+      this.cataory = res.message.data
+    },
+    menu() {
+      this.scroll = document.documentElement.scrollTop
+      if (this.scroll + 937 > 259 + this.count * 3 * 301 - 301) {
+        this.getList()
+      }
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 .bg {
-  .class_main {
-    width: 1200px;
-    background-color: #fff;
-    .el_conter {
-      width: 100%;
+  .nav {
+    width: 100%;
+    height: 30px;
+    .content {
+      width: 80%;
+      display: flex;
+      margin: 0 auto;
       div {
         box-sizing: border-box;
       }
-      .conter_main {
+      :nth-child(1) {
+        border-left: 1px dashed #ccc;
+      }
+      .nav_item {
+        border-right: 1px dashed #ccc;
+        width: 12.5%;
+        line-height: 30px;
+        font-size: 16px;
+        text-align: center;
+        span {
+          font-weight: 600;
+          border: none;
+          cursor: pointer;
+        }
+        span:hover {
+          color: 216, 30, 6;
+        }
+      }
+    }
+  }
+
+  .conter_main {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    div {
+      box-sizing: border-box;
+    }
+    .img {
+      width: 20%;
+
+      .main_images {
         width: 100%;
+        height: 100%;
+        padding-top: 15px;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
 
-        .img {
-          width: 20%;
+        .main_img {
+          width: 160px;
+          height: 226px;
 
-          .main_images {
+          img {
             width: 100%;
             height: 100%;
-            padding: 15px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            cursor: pointer;
+            box-shadow: 4px -2px 2px rgba(189, 195, 199, 1);
+          }
+        }
 
-            .main_img {
-              width: 160px;
-              height: 226px;
+        .main_bookname {
+          width: 160px;
+          height: 30px;
+          padding: 0 5px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          line-height: 30px;
+          font-size: 14px;
+          color: #678f87;
+          text-align: center;
 
-              img {
-                width: 100%;
-                height: 100%;
-                cursor: pointer;
-                box-shadow: 4px -2px 2px rgba(189, 195, 199, 1);
-              }
+          span {
+            cursor: pointer;
+            color: #678f87;
+            font-weight: 600;
+          }
+        }
+
+        .main_price {
+          display: flex;
+          width: 160px;
+          height: 30px;
+          line-height: 30px;
+
+          .newPrice {
+            flex: 1;
+
+            span {
+              color: #cc3502;
+              font-size: 16px;
+              font-weight: 600;
             }
+          }
 
-            .main_bookname {
-              width: 160px;
-              height: 30px;
-              padding: 0 5px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              line-height: 30px;
+          .oldPrice {
+            flex: 1;
+
+            span {
+              color: #aaaaaa;
               font-size: 14px;
-              color: #678f87;
-              text-align: center;
-
-              span {
-                cursor: pointer;
-                color: #678f87;
-                font-weight: 600;
-              }
-            }
-
-            .main_price {
-              display: flex;
-              width: 160px;
-              height: 30px;
-              line-height: 30px;
-
-              .newPrice {
-                flex: 1;
-
-                span {
-                  color: #cc3502;
-                  font-size: 16px;
-                  font-weight: 600;
-                }
-              }
-
-              .oldPrice {
-                flex: 1;
-
-                span {
-                  color: #aaaaaa;
-                  font-size: 14px;
-                  text-decoration: line-through;
-                }
-              }
+              text-decoration: line-through;
             }
           }
         }
       }
-
-      .conter_toTag {
-        width: 100%;
-        height: 30px;
-        text-align: right;
-
-        span {
-          padding: 30px;
-          line-height: 30px;
-          font-size: 16px;
-          color: #8ac8f2;
-          cursor: pointer;
-          font-weight: 600;
-        }
+    }
+    .conter_text {
+      width: 100%;
+      height: 30px;
+      text-align: center;
+      span {
+        font-style: 16px;
+        font-weight: 600;
+        color: #aaaaaa;
       }
     }
   }
