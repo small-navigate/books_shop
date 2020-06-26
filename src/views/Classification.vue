@@ -1,6 +1,6 @@
 <template>
   <background>
-    <headerHome></headerHome>
+    <header-home></header-home>
     <search>
       <div class="nav">
         <div class="content">
@@ -61,7 +61,6 @@ export default {
     this.routerQuery = this.$route.query.classId
     for (let i = 0; i < 5; i++) {
       this.getList()
-      console.log(this.count)
     }
 
     this.getCataoryList()
@@ -93,7 +92,6 @@ export default {
       if ((res.meta, status == 201)) {
       } else {
         this.booklist = [...this.booklist, ...res.message.data]
-        console.log(this.booklist)
         this.isShow = false
       }
     },
