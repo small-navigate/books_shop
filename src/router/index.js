@@ -7,6 +7,7 @@ import Cart from '../views/Cart.vue'
 import Center from '../views/Center.vue'
 import Details from '../views/Details.vue'
 import Classification from '../views/Classification.vue'
+import TagDetails from '../views/TagDetails.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,10 @@ const routes = [{
   {
     path: '/Classification',
     component: Classification
+  },
+  {
+    path: '/TagDetails',
+    component: TagDetails
   }
 ]
 

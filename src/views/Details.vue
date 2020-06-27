@@ -2,45 +2,9 @@
   <background>
     <header-home></header-home>
     <search>
-      <div class="bgImg">
-        <img src="http://img60.ddimg.cn/upload_img/00822/cxtc/1200x65-1592551412.jpg" />
-      </div>
       <div class="nav_content">
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item">
-          <span>哈哈哈哈</span>
+        <div class="item" v-for="item in tagList" :key="item.id">
+          <span @click="tagDetails(item.id)">{{item.tag}}</span>
         </div>
       </div>
     </search>
@@ -57,24 +21,36 @@ export default {
     search
   },
   data() {
-    return {}
+    return {
+      tagList: []
+    }
   },
-  mounted() {}
+  mounted() {
+    this.getList()
+  },
+  methods: {
+    async getList() {
+      const { data: res } = await this.$http.get('/details')
+      this.tagList = res.message.data
+    },
+    tagDetails(id) {
+      // 跳转分类页面
+      this.$router.push({
+        path: './tagDetails',
+        query: {
+          tagId: id
+        }
+      })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
-.bgImg {
-  width: 100%;
-  height: 70px;
-  padding-bottom: 15px;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
 .nav_content {
   display: flex;
   flex-wrap: wrap;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   div {
     box-sizing: border-box;
   }
@@ -82,13 +58,15 @@ export default {
     text-align: center;
     width: 10%;
     height: 40px;
-    padding-top: 3px;
-    border-top: 1px solid #ccc;
+    padding: 3px 0;
     span {
       font-size: 16px;
       font-weight: 600;
-      line-height: 28px;
+      line-height: 40px;
       cursor: pointer;
+    }
+    span:hover {
+      color: #9b59b6;
     }
   }
 }

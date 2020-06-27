@@ -15,6 +15,7 @@ import {
   Carousel,
   CarouselItem,
   Image,
+  Pagination
 } from 'element-ui'
 
 Vue.use(Container)
@@ -31,4 +32,5 @@ Vue.use(Header)
 Vue.use(Carousel)
 Vue.use(CarouselItem)
 Vue.use(Image)
+Vue.use(Pagination)
 Vue.prototype.$message = Message

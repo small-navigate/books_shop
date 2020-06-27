@@ -23,6 +23,9 @@
       </el-row>
     </div>
     <el-divider></el-divider>
+    <div class="bgImg">
+      <img src="http://img60.ddimg.cn/upload_img/00822/cxtc/1200x65-1592551412.jpg" />
+    </div>
     <slot></slot>
   </div>
 </template>
@@ -34,7 +37,15 @@ export default {}
   width: 1200px;
   margin: 0 auto;
   background-color: #fff;
-
+  .bgImg {
+    width: 100%;
+    height: 70px;
+    padding-bottom: 15px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .search {
     width: 100%;
     height: 150px;

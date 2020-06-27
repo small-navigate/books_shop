@@ -24,7 +24,7 @@
                 <span>￥{{item.newPrice}}</span>
               </div>
               <div class="oldPrice">
-                <span>￥{{item.newPrice}}</span>
+                <span>￥{{item.oldPrice}}</span>
               </div>
             </div>
           </div>
