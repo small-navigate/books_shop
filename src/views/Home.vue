@@ -39,34 +39,11 @@
           </el-row>
         </div>
       </el-header>
-
       <!-- 头部结束 -->
 
       <!-- 内容区域开始 -->
       <div class="el_main">
-        <div class="search">
-          <el-row>
-            <el-col class="search_logo" :span="5">
-              <div class="login">
-                <img src="../assets/login.png" alt />
-              </div>
-            </el-col>
-            <el-col class="search_input" :span="13">
-              <div class="input">
-                <!-- <input type="text" />
-                <div class="btn">搜索</div>-->
-                <input type="text" placeholder="🔍输入您想要的书籍" />
-                <input type="submit" value="搜索" />
-              </div>
-            </el-col>
-            <el-col class="search_code" :span="6">
-              <div class="code">
-                <img src="../assets/code.png" alt />
-              </div>
-            </el-col>
-          </el-row>
-        </div>
-        <el-divider></el-divider>
+        <search></search>
         <!-- 轮播开始 -->
         <div class="swiper">
           <el-row>
@@ -118,26 +95,7 @@
           <div class="conter_title">
             <div class="conter_text">猜你喜欢</div>
           </div>
-          <div class="conter_main">
-            <div class="img" v-for="item in likeList" :key="item.id">
-              <div class="main_images">
-                <div class="main_img">
-                  <img v-lazy="item.bookimg" />
-                </div>
-                <div class="main_bookname">
-                  <span>{{item.bookname}}</span>
-                </div>
-                <div class="main_price">
-                  <div class="newPrice">
-                    <span>￥{{item.newPrice}}</span>
-                  </div>
-                  <div class="oldPrice">
-                    <span>￥{{item.oldPrice}}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <imgList :bookList="likeList"></imgList>
           <div class="conter_toTag">
             <span @click="toTag">更多分类...</span>
           </div>
@@ -150,26 +108,7 @@
               <span @click="toClass(item.id)">{{item.cataory}}</span>
             </div>
           </div>
-          <div class="conter_main">
-            <div class="img" v-for="item2 in item.list" :key="item2.id">
-              <div class="main_images">
-                <div class="main_img">
-                  <img :src="item2.bookimg" />
-                </div>
-                <div class="main_bookname">
-                  <span>{{item2.bookname}}</span>
-                </div>
-                <div class="main_price">
-                  <div class="newPrice">
-                    <span>￥{{item2.newPrice}}</span>
-                  </div>
-                  <div class="oldPrice">
-                    <span>￥{{item2.oldPrice}}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <imgList :bookList="item.list"></imgList>
           <el-divider></el-divider>
         </div>
       </div>
@@ -222,8 +161,10 @@
 
 <script>
 import background from '../components/Backgroud'
+import imgList from '../components/ImgList'
+import search from '../components/Search'
 export default {
-  components: { background },
+  components: { background, imgList, search },
   data() {
     return {
       getSwiperList: {},

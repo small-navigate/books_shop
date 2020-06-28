@@ -8,6 +8,7 @@ import Center from '../views/Center.vue'
 import Details from '../views/Details.vue'
 import Classification from '../views/Classification.vue'
 import TagDetails from '../views/TagDetails.vue'
+import Books from '../views/books.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,10 @@ const routes = [{
   {
     path: '/TagDetails',
     component: TagDetails
+  },
+  {
+    path: '/Books',
+    component: Books
   }
 ]
 
