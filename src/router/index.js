@@ -13,10 +13,6 @@ import Books from '../views/books.vue'
 Vue.use(VueRouter)
 
 const routes = [{
-    path: '/',
-    redirect: '/home'
-  },
-  {
     path: '/home',
     component: Home
   },
@@ -54,8 +50,24 @@ const routes = [{
   }
 ]
 
+
+
+
 const router = new VueRouter({
   routes
+})
+router.beforeEach((to, from, next) => {
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (to.path === '/') return next('/home')
+  if (!tokenStr) {
+    if (to.path === '/cart') return next('/login')
+    if (to.path === '/center') return next('/login')
+  }
+  if (tokenStr) {
+    if (to.path === '/login') return next('/home')
+    if (to.path === '/register') return next('/home')
+  }
+  next()
 })
 
 export default router

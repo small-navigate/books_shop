@@ -203,8 +203,7 @@ export default {
 }
 .book_recommend {
   width: 100%;
-
-  padding: 10px 0;
+  padding: 10px 0 40px 0;
   .text {
     height: 80px;
     box-sizing: border-box;
