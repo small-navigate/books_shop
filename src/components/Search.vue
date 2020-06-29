@@ -85,8 +85,6 @@ export default {}
         }
 
         input[type='text'] {
-          position: relative;
-          top: -2px;
           background-color: #fff;
           width: 400px;
           height: 50px;
@@ -97,6 +95,8 @@ export default {}
         }
 
         input[type='submit'] {
+          position: relative;
+          top: 2px;
           border-radius: 0 25px 25px 0;
           width: 100px;
           height: 50px;

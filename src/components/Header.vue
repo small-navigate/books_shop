@@ -4,8 +4,18 @@
       <el-row>
         <el-col :span="12">
           <div class="home_left">
-            <div class="left_login" @click="toLgoin">亲，请登录</div>
-            <div @click="toRegister">免费注册</div>
+            <div class="login_false" v-if="(!$store.state.NAVSHOW)">
+              <div class="left_login" @click="toLgoin">亲，请登录</div>
+              <div @click="toRegister">免费注册</div>
+            </div>
+            <div class="login_ture" v-else>
+              <div class="portrait">
+                <div class="title_img">
+                  <img :src="$store.state.USERINFO.portrait" />
+                </div>
+              </div>
+              <div class="name" @click="toCenter">{{$store.state.USERINFO.name}}</div>
+            </div>
           </div>
         </el-col>
         <el-col :span="12">
@@ -39,6 +49,9 @@ export default {
     toCenter() {
       this.$router.push('./center')
     }
+  },
+  mounted() {
+    console.log(this.$store.state.USERINFO.username)
   }
 }
 </script>
@@ -57,24 +70,54 @@ export default {
       margin: 0 30px;
 
       .home_left {
-        display: flex;
+        .login_false {
+          display: flex;
+          .left_login {
+            color: #f22e00;
+          }
 
-        .left_login {
-          color: #f22e00;
+          div {
+            width: 100px;
+            height: 60px;
+            line-height: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+          }
+
+          div:hover {
+            background-color: #fff;
+          }
         }
-
-        div {
-          width: 100px;
-          height: 60px;
-          line-height: 60px;
-          font-size: 16px;
-          font-weight: 600;
-          text-align: center;
-          cursor: pointer;
-        }
-
-        div:hover {
-          background-color: #fff;
+        .login_ture {
+          display: flex;
+          .portrait {
+            width: 100px;
+            height: 60px;
+            display: flex;
+            .title_img {
+              padding: 5px 25px;
+              width: 50px;
+              height: 50px;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+          .name {
+            height: 60px;
+            width: 160px;
+            line-height: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+          }
+          .name:hover {
+            background-color: #fff;
+          }
         }
       }
 

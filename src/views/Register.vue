@@ -27,6 +27,7 @@
               prefix-icon="el-icon-lock"
               v-model="registerFrom.password"
               placeholder="请输入您的密码"
+              show-password
             ></el-input>
           </el-form-item>
           <el-form-item prop="checkPass">
@@ -34,6 +35,7 @@
               prefix-icon="el-icon-lock"
               v-model="registerFrom.checkPass"
               placeholder="请再次输入密码"
+              show-password
             ></el-input>
           </el-form-item>
           <!--  按钮 -->

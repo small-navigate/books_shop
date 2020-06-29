@@ -21,8 +21,18 @@
           <el-row>
             <el-col :span="12">
               <div class="home_left">
-                <div class="left_login" @click="toLgoin">亲，请登录</div>
-                <div @click="toRegister">免费注册</div>
+                <div class="login_false" v-if="!$store.state.NAVSHOW">
+                  <div class="left_login" @click="toLgoin">亲，请登录</div>
+                  <div @click="toRegister">免费注册</div>
+                </div>
+                <div class="login_ture" v-else>
+                  <div class="portrait">
+                    <div class="title_img">
+                      <img :src="$store.state.USERINFO.portrait" />
+                    </div>
+                  </div>
+                  <div class="name" @click="toCenter">{{$store.state.USERINFO.name}}</div>
+                </div>
               </div>
             </el-col>
             <el-col :span="12">
@@ -80,10 +90,10 @@
             <div class="books_box" v-for="item in cataoryListArr.cataoryList" :key="item.id">
               <div class="books_box_center">
                 <div class="books_img">
-                  <img v-lazy="item.bookimg" />
+                  <img @click="toDetailList(item.id)" v-lazy="item.bookimg" />
                 </div>
                 <div class="books_text">
-                  <a href="javascript:;">{{item.bookname}}</a>
+                  <span @click="toDetailList(item.id)">{{item.bookname}}</span>
                 </div>
               </div>
             </div>
@@ -206,6 +216,14 @@ export default {
         path: './classification',
         query: {
           classId: id
+        }
+      })
+    },
+    toDetailList(id) {
+      this.$router.push({
+        path: './books',
+        query: {
+          bookId: id
         }
       })
     },

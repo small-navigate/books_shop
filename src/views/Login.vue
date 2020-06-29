@@ -19,7 +19,12 @@
             <el-input prefix-icon="el-icon-user" v-model="loginFrom.username" placeholder="请输入您的账号"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input prefix-icon="el-icon-lock" v-model="loginFrom.password" placeholder="请输入您的密码"></el-input>
+            <el-input
+              prefix-icon="el-icon-lock"
+              v-model="loginFrom.password"
+              show-password
+              placeholder="请输入您的密码"
+            ></el-input>
           </el-form-item>
           <!--  按钮 -->
           <el-form-item class="login_btn">
@@ -91,6 +96,8 @@ export default {
           type: 'success'
         })
         window.sessionStorage.setItem('token', res.token)
+        this.$store.commit('changeNavShow', res.token)
+        this.$store.commit('userInfo', res.message[0].user)
         this.$router.push('/home')
       })
     }
