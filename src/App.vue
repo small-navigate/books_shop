@@ -11,7 +11,6 @@ export default {
   methods: {
     async getUser() {
       const token = window.sessionStorage.getItem('token')
-      console.log(token)
       if (token) {
         const { data: res } = await this.$http({
           headers: {
@@ -20,8 +19,9 @@ export default {
           methods: 'get',
           url: `/finduser`
         })
+        console.log(res)
         this.$store.state.NAVSHOW = true
-        this.$store.state.USERINFO = res.message[0][0]
+        this.$store.state.USERINFO = res.message[0]
       }
     }
   }

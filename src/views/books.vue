@@ -82,18 +82,14 @@ export default {
   },
   mounted() {
     this.bookId = this.$route.query.bookId
-    console.log('哈哈', this.bookId)
     this.getItem()
     this.path = this.$route.path + '?' + this.$route.query.bookId
   },
   methods: {
     async getItem() {
       const { data: res } = await this.$http.get(`/bookItem/${this.bookId}`)
-      console.log(res)
       this.bookItem = res.message.data[0]
       this.bookList = res.message.bookList
-      console.log(this.bookItem)
-      console.log(this.bookList)
     },
     getId(id) {
       this.bookId = id

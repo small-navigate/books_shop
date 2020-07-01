@@ -28,7 +28,7 @@ export default {
   methods: {
     toDetailList(id) {
       this.$router.push({
-        path: './books',
+        path: '/books',
         query: {
           bookId: id
         }

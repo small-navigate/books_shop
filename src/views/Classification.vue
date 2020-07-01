@@ -50,7 +50,7 @@ export default {
     toClassification(id) {
       // 跳转分类页面
       this.$router.push({
-        path: './classification',
+        path: '/classification',
         query: {
           classId: id
         }

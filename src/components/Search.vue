@@ -9,8 +9,6 @@
         </el-col>
         <el-col class="search_input" :span="13">
           <div class="input">
-            <!-- <input type="text" />
-            <div class="btn">搜索</div>-->
             <input type="text" placeholder="🔍输入您想要的书籍" />
             <input type="submit" value="搜索" />
           </div>

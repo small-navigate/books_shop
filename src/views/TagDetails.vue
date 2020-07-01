@@ -52,15 +52,12 @@ export default {
       })
       this.total = res.message.total
       this.bookList = res.message.data
-      console.log(this.bookList)
     },
     handleSizeChange(newSize) {
-      console.log('每页显示数据', newSize)
       this.params.pageSize = newSize
       this.getList()
     },
     handleCurrentChange(newPage) {
-      console.log('页码改变', newPage)
       this.params.currentPage = newPage
       this.getList()
     }

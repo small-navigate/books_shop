@@ -44,14 +44,11 @@ export default {
       this.$router.push('/register')
     },
     toCart() {
-      this.$router.push('./cart')
+      this.$router.push('/cart')
     },
     toCenter() {
-      this.$router.push('./center')
+      this.$router.push('/center')
     }
-  },
-  mounted() {
-    console.log(this.$store.state.USERINFO.username)
   }
 }
 </script>

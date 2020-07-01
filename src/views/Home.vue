@@ -201,14 +201,14 @@ export default {
       this.$router.push('/register')
     },
     toCart() {
-      this.$router.push('./cart')
+      this.$router.push('/cart')
     },
     toCenter() {
-      this.$router.push('./center')
+      this.$router.push('/center')
     },
     toTag() {
       // 跳转详细分类页面
-      this.$router.push('./Details')
+      this.$router.push('/Details')
     },
     toClass(id) {
       // 跳转分类页面
@@ -238,7 +238,6 @@ export default {
       const { data: res } = await this.$http.get('/home/content')
       this.likeList = res.message.homeLikeList
       this.CataoryList = res.message.homeCataoryList
-      console.log(this.likeList, this.CataoryList)
 
       this.conterCataoryList
       this.getSwiperList.cataory.forEach(v => {})
@@ -247,7 +246,6 @@ export default {
     mouseOver(index) {
       clearInterval(this.isTimer)
       this.cataoryListArr = this.getSwiperList.cataory[index]
-      console.log(this.cataoryListArr)
       if (this.cataoryListArr.id == index + 1) {
         this.isShow = true
       }
@@ -263,11 +261,9 @@ export default {
     },
     over() {
       this.isListShow = true
-      console.log(this.isListShow)
     },
     leave() {
       this.isListShow = false
-      console.log(this.isListShow)
     }
   }
 }

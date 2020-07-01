@@ -120,7 +120,6 @@ export default {
     // 表单数据预校验
     register() {
       this.$refs.registerFormRef.validate(async valid => {
-        console.log(valid)
         if (!valid) return
         const { data: res } = await this.$http.post(
           '/register',
