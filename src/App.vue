@@ -5,13 +5,14 @@
 </template>
 <script>
 export default {
-  mounted() {
+  created() {
     this.getUser()
   },
   methods: {
     async getUser() {
       const token = window.sessionStorage.getItem('token')
       if (token) {
+        console.log('请求之前', new Date())
         const { data: res } = await this.$http({
           headers: {
             Authorization: `Bearer ${token}`
@@ -19,9 +20,10 @@ export default {
           methods: 'get',
           url: `/finduser`
         })
-        console.log(res)
+        console.log('请求之后', new Date())
         this.$store.state.NAVSHOW = true
         this.$store.state.USERINFO = res.message[0]
+        console.log(new Date())
       }
     }
   }

@@ -43,7 +43,7 @@
               </div>
             </div>
             <div class="info_oper">
-              <div class="info_add">
+              <div class="info_add" @click="addCart">
                 <span>购物车</span>
               </div>
               <div class="info_puy">
@@ -94,6 +94,38 @@ export default {
     getId(id) {
       this.bookId = id
       this.getItem()
+    },
+    //添加购物车
+    addCart() {
+      if (!this.$store.state.NAVSHOW) {
+        this.$router.push('/login')
+        return
+      }
+      console.log(this.$store.state.USERINFO.info)
+      let isAdd = true
+      this.$store.state.USERINFO.info.forEach((v, i) => {
+        console.log(v)
+        if (v.bookid == this.bookId) {
+          this.$store.dispatch('putCart', {
+            index: i,
+            value: v.num + 1,
+            id: v.id,
+            ajax: this.$http
+          })
+          isAdd = false
+        }
+      })
+      if (isAdd) {
+        const userid = this.$store.state.USERINFO.id
+        const bookid = this.bookId
+        const num = 1
+        this.$store.dispatch('addCart', {
+          userid,
+          bookid,
+          num,
+          ajax: this.$http
+        })
+      }
     }
   }
 }
