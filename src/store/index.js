@@ -32,6 +32,13 @@ export default new Vuex.Store({
         userid: obj.userid
       })
       console.log(state.USERINFO.info)
+    },
+    putUserInfo(state, obj) {
+      state.USERINFO.age = obj.age
+      state.USERINFO.sex = obj.sex
+      state.USERINFO.name = obj.name
+      state.USERINFO.introduce = obj.introduce
+      console.log('修改成功');
     }
   },
   actions: {
@@ -57,6 +64,20 @@ export default new Vuex.Store({
         bookid: obj.bookid,
         userid: obj.userid,
         id: res.message.data
+      })
+    },
+    putUser(context, obj) {
+      context.commit('putUserInfo', obj)
+      console.log(obj);
+      obj.ajax.put('/putuser', {
+        id: obj.id,
+        value: {
+          name: obj.name,
+          age: obj.age,
+          sex: obj.sex,
+          introduce: obj.introduce
+        }
+
       })
     }
   },

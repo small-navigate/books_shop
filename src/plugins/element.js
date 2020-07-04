@@ -17,7 +17,10 @@ import {
   Image,
   Pagination,
   Checkbox,
-  InputNumber
+  InputNumber,
+  Upload,
+  Select,
+  Option
 } from 'element-ui'
 
 Vue.use(Container)
@@ -37,4 +40,7 @@ Vue.use(Image)
 Vue.use(Pagination)
 Vue.use(Checkbox)
 Vue.use(InputNumber)
+Vue.use(Upload)
+Vue.use(Select)
+Vue.use(Option)
 Vue.prototype.$message = Message
