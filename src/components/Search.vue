@@ -9,7 +9,13 @@
         </el-col>
         <el-col class="search_input" :span="13">
           <div class="input">
-            <input type="text" placeholder="🔍输入您想要的书籍" />
+            <input
+              v-model="searchBook"
+              type="text"
+              placeholder="🔍输入您想要的书籍"
+              @input="changeName"
+              @blur="inputBlur"
+            />
             <input type="submit" value="搜索" />
           </div>
         </el-col>
@@ -19,6 +25,11 @@
           </div>
         </el-col>
       </el-row>
+      <div class="info_search" v-show="isShow">
+        <div class="text" v-for="item in list" :key="item.id" @click="toDetailList(item.id)">
+          <span>{{item.bookname}}</span>
+        </div>
+      </div>
     </div>
     <el-divider></el-divider>
     <div class="bgImg">
@@ -28,7 +39,48 @@
   </div>
 </template>
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      searchBook: '',
+      isShow: false,
+      timer: null,
+      list: []
+    }
+  },
+  methods: {
+    changeName() {
+      this.isShow = true
+      if (this.searchBook.length == 0) {
+        this.list = []
+        this.isShow = false
+      }
+      clearInterval(this.timer)
+      this.timer = setTimeout(async () => {
+        const { data: res } = await this.$http.get('/search', {
+          params: { query: this.searchBook }
+        })
+        this.list = res.message.data
+        console.log(this.list)
+      }, 500)
+    },
+    inputBlur() {
+      setTimeout(() => {
+        this.isShow = false
+      }, 500)
+    },
+    toDetailList(id) {
+      console.log(id)
+      this.$router.push({
+        path: '/books',
+        query: {
+          bookId: id
+        }
+      })
+      this.$emit('getIdSeach', id)
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .el_main {
@@ -48,7 +100,31 @@ export default {}
     width: 100%;
     height: 150px;
     background-color: #fff;
-
+    position: relative;
+    .info_search {
+      width: 500px;
+      height: 300px;
+      background-color: #f5f5f5;
+      opacity: 0.9;
+      position: absolute;
+      top: 100px;
+      left: 324px;
+      z-index: 10;
+      overflow: hidden;
+      .text {
+        font-size: 16px;
+        padding-left: 15px;
+        height: 30px;
+        cursor: pointer;
+        span {
+          line-height: 30px;
+        }
+      }
+      .text:hover {
+        background-color: #3b3b3b;
+        color: #fff;
+      }
+    }
     .search_logo {
       height: 150px;
 

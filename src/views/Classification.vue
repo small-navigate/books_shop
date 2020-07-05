@@ -33,7 +33,8 @@ export default {
       cataory: [],
       scroll: '',
       body: '',
-      isShow: false
+      isShow: false,
+      timer: null
     }
   },
   mounted() {
@@ -79,10 +80,15 @@ export default {
       this.cataory = res.message.data
     },
     menu() {
-      this.scroll = document.documentElement.scrollTop
-      if (this.scroll + 937 > 259 + this.count * 3 * 301 - 301) {
-        this.getList()
-      }
+      clearInterval(this.timer)
+      this.timer = setInterval(() => {
+        this.scroll = document.documentElement.scrollTop
+        console.log(this.scroll)
+        if (this.scroll + 937 > 259 + this.count * 3 * 301 - 301) {
+          this.getList()
+        }
+        clearInterval(this.timer)
+      }, 300)
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <background>
     <headerHome></headerHome>
-    <search style="backgroundColor: #fcfaf7">
+    <search style="backgroundColor: #fcfaf7" @getIdSeach="getSearch">
       <div class="book_item">
         <div class="book_img">
           <div class="img">
@@ -92,6 +92,10 @@ export default {
       this.bookList = res.message.bookList
     },
     getId(id) {
+      this.bookId = id
+      this.getItem()
+    },
+    getSearch(id) {
       this.bookId = id
       this.getItem()
     },
